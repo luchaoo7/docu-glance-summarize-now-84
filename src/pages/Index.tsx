@@ -4,6 +4,8 @@ import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import FileUploader from '@/components/FileUploader';
 import DocumentSummary from '@/components/DocumentSummary';
+import DocumentQuestions from '@/components/DocumentQuestions';
+import QuestionAnswers from '@/components/QuestionAnswers';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { summarizeFile, SummaryResult } from '@/utils/summarize';
@@ -14,12 +16,17 @@ const Index = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [summary, setSummary] = useState<SummaryResult | null>(null);
   const [showUploader, setShowUploader] = useState(false);
+  const [questions, setQuestions] = useState<string[]>(['']);
   
   const fileUploaderRef = useRef<HTMLDivElement>(null);
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
     setSummary(null);
+  };
+
+  const handleQuestionsChange = (newQuestions: string[]) => {
+    setQuestions(newQuestions);
   };
 
   const handleSummarize = async () => {
@@ -30,7 +37,7 @@ const Index = () => {
 
     setIsProcessing(true);
     try {
-      const result = await summarizeFile(file);
+      const result = await summarizeFile(file, questions);
       setSummary(result);
     } catch (error) {
       toast.error('Failed to summarize document. Please try again.');
@@ -50,6 +57,7 @@ const Index = () => {
   const handleReset = () => {
     setFile(null);
     setSummary(null);
+    setQuestions(['']);
   };
 
   return (
@@ -73,6 +81,8 @@ const Index = () => {
           </div>
 
           <FileUploader onFileSelect={handleFileSelect} />
+
+          {file && <DocumentQuestions onQuestionsChange={handleQuestionsChange} />}
 
           <div className="mt-6 text-center">
             <Button
@@ -111,6 +121,10 @@ const Index = () => {
             fileName={file?.name || 'Document'}
           />
 
+          {summary.questionAnswers.length > 0 && (
+            <QuestionAnswers qaItems={summary.questionAnswers} />
+          )}
+
           <div className="mt-10 text-center">
             <Button variant="outline" onClick={handleReset}>
               Summarize Another Document
@@ -138,13 +152,13 @@ const Index = () => {
               },
               {
                 step: '02',
-                title: 'AI Processing',
-                description: 'Our advanced algorithms analyze and extract the key information from your document.'
+                title: 'Ask Questions',
+                description: 'Add up to 5 specific questions you want answered from your document content.'
               },
               {
                 step: '03',
-                title: 'Get Your Summary',
-                description: 'Review your concise summary and key points extracted from your document.'
+                title: 'Get Insights',
+                description: 'Review your concise summary, key points, and answers to your specific questions.'
               }
             ].map((item) => (
               <div key={item.step} className="bg-background p-8 rounded-lg shadow-sm">

@@ -16,8 +16,7 @@ const Hero = ({ onGetStarted }: HeroProps) => {
           </h1>
           
           <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
-            Upload your documents and get concise, accurate summaries in seconds.
-            Save time and extract key information effortlessly.
+            Upload your documents, get concise summaries, and ask specific questions about your content. Save time and extract exactly what you need.
           </p>
 
           <div className="mt-10">
@@ -69,8 +68,8 @@ const features = [
     ),
   },
   {
-    title: 'Instant Summaries',
-    description: 'Advanced algorithms extract the key information from your documents in seconds.',
+    title: 'Ask Specific Questions',
+    description: 'Get direct answers to up to 5 specific questions about your document content.',
     icon: (props: any) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -83,14 +82,14 @@ const features = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
+          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
     ),
   },
   {
-    title: 'Key Insights',
-    description: 'Automatically extract important keywords and concepts from your documents.',
+    title: 'Smart Analysis',
+    description: 'Advanced algorithms extract key information and provide accurate answers based on document content.',
     icon: (props: any) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"

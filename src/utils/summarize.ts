@@ -7,9 +7,10 @@ export interface SummaryResult {
   summary: string;
   keywords: string[];
   readingTime: number;
+  questionAnswers: { question: string; answer: string }[];
 }
 
-export const summarizeText = async (text: string): Promise<SummaryResult> => {
+export const summarizeText = async (text: string, questions: string[]): Promise<SummaryResult> => {
   // Simulate API call with a timeout
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -38,31 +39,70 @@ export const summarizeText = async (text: string): Promise<SummaryResult> => {
       // Estimate reading time (average adult reads ~200-250 words per minute)
       const readingTime = Math.max(1, Math.ceil(wordCount / 200));
       
+      // Generate mock answers to questions
+      const questionAnswers = questions
+        .filter(q => q.trim() !== '')
+        .map(question => {
+          // Mock answer generation logic - in a real app this would use NLP
+          const isYesNoQuestion = /^(is|are|can|do|does|has|have|will|would|should|did|was|were)/i.test(question);
+          const containsNumber = /\d+/.test(question);
+          
+          let answer;
+          if (isYesNoQuestion) {
+            answer = Math.random() > 0.5 ? 'Yes, based on the document content.' : 'No, according to the information provided.';
+          } else if (containsNumber) {
+            answer = `The document indicates a figure of approximately ${Math.floor(Math.random() * 1000) + 100}.`;
+          } else {
+            // Generate a more complex answer
+            const randomKeywords = [...keywords].sort(() => 0.5 - Math.random()).slice(0, 2);
+            answer = `The document discusses ${randomKeywords.join(' and ')} in relation to this topic. The main point suggests that this is a key consideration in the overall context.`;
+          }
+          
+          return { question, answer };
+        });
+      
       resolve({
         title: "Document Summary",
         summary,
         keywords,
-        readingTime
+        readingTime,
+        questionAnswers
       });
     }, 1500);
   });
 };
 
-export const summarizeFile = async (file: File): Promise<SummaryResult> => {
+export const summarizeFile = async (file: File, questions: string[]): Promise<SummaryResult> => {
   try {
     // For demonstration, we're only handling text files directly
     // In a real app, you'd use specialized libraries for different file types
     if (file.type === 'text/plain') {
       const text = await file.text();
-      return summarizeText(text);
+      return summarizeText(text, questions);
     }
     
     // Mock response for other file types
+    const mockAnswers = questions
+      .filter(q => q.trim() !== '')
+      .map(question => {
+        const isFinancialQuestion = /(profit|revenue|income|money|million|thousand|dollar|finance)/i.test(question);
+        
+        let answer;
+        if (isFinancialQuestion) {
+          answer = `Yes, the financial data indicates the company ${Math.random() > 0.5 ? 'exceeded' : 'did not reach'} the expected targets.`;
+        } else {
+          answer = `Based on the document analysis, the answer is ${Math.random() > 0.6 ? 'affirmative' : 'negative'} with approximately ${Math.floor(Math.random() * 80) + 20}% confidence.`;
+        }
+        
+        return { question, answer };
+      });
+    
     return {
       title: file.name,
       summary: "This is a sample summary of the document. It contains the main points and key information extracted from the text. The summary highlights the most important concepts and conclusions, allowing you to quickly understand the document's content without reading it in full.",
       keywords: ["document", "summary", "analysis", "information", "content"],
-      readingTime: 3
+      readingTime: 3,
+      questionAnswers: mockAnswers
     };
   } catch (error) {
     console.error('Error summarizing file:', error);
