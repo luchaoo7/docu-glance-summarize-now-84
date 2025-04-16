@@ -1,6 +1,7 @@
 
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { FileText, Menu, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import {
   Sheet,
   SheetContent,
@@ -20,12 +21,10 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const [language, setLanguage] = useState('English');
+  const { t, i18n } = useTranslation();
 
   const handleLanguageChange = (lang: string) => {
-    setLanguage(lang);
-    // Here you would implement actual language change logic
-    console.log(`Language changed to: ${lang}`);
+    i18n.changeLanguage(lang);
   };
 
   return (
@@ -41,17 +40,17 @@ const Layout = ({ children }: LayoutProps) => {
               <ul className="flex items-center gap-6">
                 <li>
                   <a href="#" className="text-sm hover:text-primary">
-                    Features
+                    {t('navigation.features')}
                   </a>
                 </li>
                 <li>
                   <a href="#" className="text-sm hover:text-primary">
-                    How it Works
+                    {t('navigation.howItWorks')}
                   </a>
                 </li>
                 <li>
                   <a href="#" className="text-sm hover:text-primary">
-                    About
+                    {t('navigation.about')}
                   </a>
                 </li>
               </ul>
@@ -59,16 +58,16 @@ const Layout = ({ children }: LayoutProps) => {
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 px-2 py-1 rounded-md hover:bg-accent text-sm font-medium">
                 <Globe className="h-4 w-4" />
-                <span>{language}</span>
+                <span>{t('language')}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleLanguageChange('English')}>
+                <DropdownMenuItem onClick={() => handleLanguageChange('en')}>
                   English
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleLanguageChange('Español')}>
+                <DropdownMenuItem onClick={() => handleLanguageChange('es')}>
                   Español
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleLanguageChange('Français')}>
+                <DropdownMenuItem onClick={() => handleLanguageChange('fr')}>
                   Français
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -79,48 +78,48 @@ const Layout = ({ children }: LayoutProps) => {
               </SheetTrigger>
               <SheetContent side="right" className="w-[250px] sm:w-[300px]">
                 <SheetHeader>
-                  <SheetTitle>Menu</SheetTitle>
+                  <SheetTitle>{t('menu')}</SheetTitle>
                 </SheetHeader>
                 <nav className="mt-6">
                   <ul className="space-y-4">
                     <li>
                       <a href="#" className="block py-2 hover:text-primary">
-                        Features
+                        {t('navigation.features')}
                       </a>
                     </li>
                     <li>
                       <a href="#" className="block py-2 hover:text-primary">
-                        How it Works
+                        {t('navigation.howItWorks')}
                       </a>
                     </li>
                     <li>
                       <a href="#" className="block py-2 hover:text-primary">
-                        About
+                        {t('navigation.about')}
                       </a>
                     </li>
                     <li className="pt-4 border-t">
-                      <div className="font-medium mb-2">Language</div>
+                      <div className="font-medium mb-2">{t('language')}</div>
                       <div className="space-y-2">
                         <button
-                          onClick={() => handleLanguageChange('English')}
+                          onClick={() => handleLanguageChange('en')}
                           className={`block w-full text-left py-1 px-2 rounded ${
-                            language === 'English' ? 'bg-accent text-accent-foreground' : ''
+                            i18n.language === 'en' ? 'bg-accent text-accent-foreground' : ''
                           }`}
                         >
                           English
                         </button>
                         <button
-                          onClick={() => handleLanguageChange('Español')}
+                          onClick={() => handleLanguageChange('es')}
                           className={`block w-full text-left py-1 px-2 rounded ${
-                            language === 'Español' ? 'bg-accent text-accent-foreground' : ''
+                            i18n.language === 'es' ? 'bg-accent text-accent-foreground' : ''
                           }`}
                         >
                           Español
                         </button>
                         <button
-                          onClick={() => handleLanguageChange('Français')}
+                          onClick={() => handleLanguageChange('fr')}
                           className={`block w-full text-left py-1 px-2 rounded ${
-                            language === 'Français' ? 'bg-accent text-accent-foreground' : ''
+                            i18n.language === 'fr' ? 'bg-accent text-accent-foreground' : ''
                           }`}
                         >
                           Français
@@ -145,7 +144,7 @@ const Layout = ({ children }: LayoutProps) => {
               <span className="font-semibold">DocuGlance</span>
             </div>
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} DocuGlance. All rights reserved.
+              © {new Date().getFullYear()} DocuGlance. {t('footer.rights')}
             </div>
           </div>
         </div>

@@ -1,0 +1,13 @@
+
+{
+  "language": "English",
+  "navigation": {
+    "features": "Features",
+    "howItWorks": "How it Works",
+    "about": "About"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "menu": "Menu"
+}

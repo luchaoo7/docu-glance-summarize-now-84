@@ -1,0 +1,13 @@
+
+{
+  "language": "Français",
+  "navigation": {
+    "features": "Fonctionnalités",
+    "howItWorks": "Comment Ça Marche",
+    "about": "À Propos"
+  },
+  "footer": {
+    "rights": "Tous droits réservés."
+  },
+  "menu": "Menu"
+}
