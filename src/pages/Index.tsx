@@ -8,8 +8,9 @@ import DocumentQuestions from '@/components/DocumentQuestions';
 import QuestionAnswers from '@/components/QuestionAnswers';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
-import { summarizeFile, SummaryResult } from '@/utils/summarize';
+import { SummaryResult } from '@/utils/summarize';
 import { toast } from 'sonner';
+import { submitDocumentForAnalysis } from '@/services/apiService';
 
 const Index = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -37,10 +38,12 @@ const Index = () => {
 
     setIsProcessing(true);
     try {
-      const result = await summarizeFile(file, questions);
+      // Use the new API service instead of the local summarizeFile function
+      const result = await submitDocumentForAnalysis(file, questions);
       setSummary(result);
+      toast.success('Document successfully analyzed!');
     } catch (error) {
-      toast.error('Failed to summarize document. Please try again.');
+      toast.error('Failed to analyze document. Please try again.');
       console.error(error);
     } finally {
       setIsProcessing(false);
