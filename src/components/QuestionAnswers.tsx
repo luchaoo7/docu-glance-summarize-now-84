@@ -6,6 +6,7 @@ import { CheckCircle, HelpCircle } from 'lucide-react';
 interface QuestionAnswerPair {
   question: string;
   answer: string;
+  isCovered: boolean;
 }
 
 interface QuestionAnswersProps {
@@ -31,7 +32,11 @@ const QuestionAnswers = ({ qaItems }: QuestionAnswersProps) => {
               <div className="space-y-2">
                 <div className="font-medium">Q: {item.question}</div>
                 <div className="flex items-start gap-2 text-sm pl-4">
+                  {item.isCovered ? 
                   <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  : 
+                  <CheckCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                  }
                   <div>{item.answer}</div>
                 </div>
               </div>
