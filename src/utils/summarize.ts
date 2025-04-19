@@ -2,12 +2,14 @@
 // This is a mock implementation for demonstration.
 // In a real app, you would connect to an API or use a library for summarization.
 
+import { CoverageAnswer } from "@/services/api";
+
 export interface SummaryResult {
   title: string;
   summary: string;
   keywords: string[];
   readingTime: number;
-  questionAnswers: { question: string; answer: string }[];
+  questionAnswers: { question: string; answer: string, isCovered: boolean}[];
 }
 
 export const summarizeText = async (text: string, questions: string[]): Promise<SummaryResult> => {
@@ -57,8 +59,9 @@ export const summarizeText = async (text: string, questions: string[]): Promise<
             const randomKeywords = [...keywords].sort(() => 0.5 - Math.random()).slice(0, 2);
             answer = `The document discusses ${randomKeywords.join(' and ')} in relation to this topic. The main point suggests that this is a key consideration in the overall context.`;
           }
-          
-          return { question, answer };
+
+          const isCovered = false;
+          return { question, answer, isCovered };
         });
       
       resolve({
@@ -72,7 +75,7 @@ export const summarizeText = async (text: string, questions: string[]): Promise<
   });
 };
 
-export const summarizeFile = async (file: File, questions: string[]): Promise<SummaryResult> => {
+export const summarizeFile = async (file: File, questions: string[], coverageAnswer: CoverageAnswer[]): Promise<SummaryResult> => {
   try {
     // For demonstration, we're only handling text files directly
     // In a real app, you'd use specialized libraries for different file types
@@ -84,7 +87,7 @@ export const summarizeFile = async (file: File, questions: string[]): Promise<Su
     // Mock response for other file types
     const mockAnswers = questions
       .filter(q => q.trim() !== '')
-      .map(question => {
+      .map((question, index) => {
         const isFinancialQuestion = /(profit|revenue|income|money|million|thousand|dollar|finance)/i.test(question);
         
         let answer;
@@ -94,7 +97,9 @@ export const summarizeFile = async (file: File, questions: string[]): Promise<Su
           answer = `Based on the document analysis, the answer is ${Math.random() > 0.6 ? 'affirmative' : 'negative'} with approximately ${Math.floor(Math.random() * 80) + 20}% confidence.`;
         }
         
-        return { question, answer };
+        answer = coverageAnswer[index].Yes ? coverageAnswer[index].Yes : coverageAnswer[index].No;
+        const isCovered = coverageAnswer[index].Yes ? true : false;
+        return { question, answer, isCovered};
       });
     
     return {
