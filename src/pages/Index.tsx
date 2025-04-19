@@ -11,6 +11,7 @@ import { Loader2 } from 'lucide-react';
 import { summarizeFile, SummaryResult } from '@/utils/summarize';
 import { toast } from 'sonner';
 import { processDocument } from '@/services/api';
+import { FileText } from 'lucide-react';
 
 const Index = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -38,8 +39,9 @@ const Index = () => {
 
     setIsProcessing(true);
     try {
-      await processDocument(file, questions)
-      const result = await summarizeFile(file, questions);
+      const response = await processDocument(file, questions)
+      console.log(response.data)
+      const result = await summarizeFile(file, questions, response.data);
       setSummary(result);
     } catch (error) {
       toast.error('Failed to summarize document. Please try again.');
@@ -109,12 +111,12 @@ const Index = () => {
       {summary && (
         <div className="container py-16 max-w-4xl">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold">Document Summary</h2>
+            <h2 className="text-3xl font-bold">Document Coverage</h2>
             <p className="text-muted-foreground mt-2">
-              Here's what we found in your document
+              Here's what we found in your document 
             </p>
           </div>
-
+{/* 
           <DocumentSummary
             summary={summary.summary}
             keywords={summary.keywords}
@@ -122,7 +124,7 @@ const Index = () => {
             readingTime={summary.readingTime}
             fileName={file?.name || 'Document'}
           />
-
+ */}
           {summary.questionAnswers.length > 0 && (
             <QuestionAnswers qaItems={summary.questionAnswers} />
           )}
