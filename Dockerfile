@@ -18,8 +18,9 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy custom Nginx configuration
-COPY nginx-ssl.conf /etc/nginx/conf.d/default-ssl.conf
-COPY nginx-org.conf /etc/nginx/conf.d/default.conf
+#COPY nginx-ssl.conf /etc/nginx/conf.d/default-ssl.conf
+#COPY nginx-org.conf /etc/nginx/conf.d/default.conf
+COPY nginx-reverse-proxy.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80
