@@ -12,11 +12,11 @@ const Hero = ({ onGetStarted }: HeroProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 md:py-28">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
-            Document Summarizer
+            Insurance Document Assistant
           </h1>
           
           <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
-            Upload your documents, get concise summaries, and ask specific questions about your content. Save time and extract exactly what you need.
+            Upload your insurance policies and related documents to get clear summaries and ask specific questions about your coverage and terms. Simplify complex insurance information.
           </p>
 
           <div className="mt-10">
@@ -48,8 +48,8 @@ const Hero = ({ onGetStarted }: HeroProps) => {
 
 const features = [
   {
-    title: 'Upload Any Document',
-    description: 'Support for PDFs, Word documents, and text files with easy drag-and-drop functionality.',
+    title: 'Upload Insurance Documents',
+    description: 'Easily upload PDFs, Word documents, and text files containing your insurance policies and claims.',
     icon: (props: any) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -68,8 +68,8 @@ const features = [
     ),
   },
   {
-    title: 'Ask Specific Questions',
-    description: 'Get direct answers to up to 5 specific questions about your document content.',
+    title: 'Ask Your Insurance Questions',
+    description: 'Get precise answers to up to 5 specific questions about your policy, coverage limits, exclusions, and claims.',
     icon: (props: any) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -88,8 +88,8 @@ const features = [
     ),
   },
   {
-    title: 'Smart Analysis',
-    description: 'Advanced algorithms extract key information and provide accurate answers based on document content.',
+    title: 'Expert Analysis',
+    description: 'Advanced algorithms analyze your insurance documents to highlight key terms and provide reliable answers.',
     icon: (props: any) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
