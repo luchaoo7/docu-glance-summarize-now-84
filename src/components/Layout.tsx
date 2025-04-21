@@ -27,9 +27,16 @@ const Layout = ({ children }: LayoutProps) => {
     i18n.changeLanguage(lang);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b py-4">
+      <header className="border-b py-4 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
         <div className="container flex items-center justify-between">
           <a href="/" className="flex items-center gap-2 text-xl font-bold text-primary">
             <FileText className="h-6 w-6" />
@@ -39,19 +46,19 @@ const Layout = ({ children }: LayoutProps) => {
             <nav className="hidden md:block">
               <ul className="flex items-center gap-6">
                 <li>
-                  <a href="#" className="text-sm hover:text-primary">
+                  <button onClick={() => scrollToSection('features')} className="text-sm hover:text-primary">
                     {t('navigation.features')}
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#" className="text-sm hover:text-primary">
+                  <button onClick={() => scrollToSection('how-it-works')} className="text-sm hover:text-primary">
                     {t('navigation.howItWorks')}
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#" className="text-sm hover:text-primary">
+                  <button onClick={() => scrollToSection('about')} className="text-sm hover:text-primary">
                     {t('navigation.about')}
-                  </a>
+                  </button>
                 </li>
               </ul>
             </nav>

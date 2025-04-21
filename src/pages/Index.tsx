@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -19,7 +18,24 @@ const Index = () => {
   const [summary, setSummary] = useState<SummaryResult | null>(null);
   const [showUploader, setShowUploader] = useState(false);
   const [questions, setQuestions] = useState<string[]>(['']);
-  
+  const [features, setFeatures] = useState([
+    {
+      step: '01',
+      title: 'Upload Document',
+      description: 'Upload your insurance policies and related documents through our secure interface.'
+    },
+    {
+      step: '02',
+      title: 'Ask Questions',
+      description: 'Specify up to 5 questions about your coverage, terms, or any specific concerns.'
+    },
+    {
+      step: '03',
+      title: 'Get Insights',
+      description: 'Receive clear answers and summaries about your insurance coverage and terms.'
+    }
+  ]);
+
   const fileUploaderRef = useRef<HTMLDivElement>(null);
 
   const handleFileSelect = (selectedFile: File) => {
@@ -116,15 +132,6 @@ const Index = () => {
               Here's what we found in your document 
             </p>
           </div>
-{/* 
-          <DocumentSummary
-            summary={summary.summary}
-            keywords={summary.keywords}
-            title={summary.title}
-            readingTime={summary.readingTime}
-            fileName={file?.name || 'Document'}
-          />
- */}
           {summary.questionAnswers.length > 0 && (
             <QuestionAnswers qaItems={summary.questionAnswers} />
           )}
@@ -138,12 +145,34 @@ const Index = () => {
       )}
 
       {/* Features Section */}
-      <div className="bg-accent/20 py-16">
+      <div id="features" className="bg-accent/20 py-16">
+        <div className="container max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold">Features</h2>
+            <p className="text-muted-foreground mt-2">
+              Get started with DocuGlance in three simple steps
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feature) => (
+              <div key={feature.step} className="bg-background p-8 rounded-lg shadow-sm">
+                <div className="text-xl font-bold text-primary mb-4">{feature.step}</div>
+                <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
+                <p className="text-muted-foreground">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* How It Works Section */}
+      <div id="how-it-works" className="py-16">
         <div className="container max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold">How It Works</h2>
             <p className="text-muted-foreground mt-2">
-              Get started with DocuGlance in three simple steps
+              Start analyzing your insurance documents in minutes
             </p>
           </div>
 
@@ -152,25 +181,64 @@ const Index = () => {
               {
                 step: '01',
                 title: 'Upload Document',
-                description: 'Upload your PDF, Word document, or text file through our simple interface.'
+                description: 'Upload your insurance policies and related documents through our secure interface.'
               },
               {
                 step: '02',
                 title: 'Ask Questions',
-                description: 'Add up to 5 specific questions you want answered from your document content.'
+                description: 'Specify up to 5 questions about your coverage, terms, or any specific concerns.'
               },
               {
                 step: '03',
                 title: 'Get Insights',
-                description: 'Review your concise summary, key points, and answers to your specific questions.'
+                description: 'Receive clear answers and summaries about your insurance coverage and terms.'
               }
             ].map((item) => (
-              <div key={item.step} className="bg-background p-8 rounded-lg shadow-sm">
+              <div key={item.step} className="bg-background rounded-xl p-8 shadow-sm border">
                 <div className="text-xl font-bold text-primary mb-4">{item.step}</div>
                 <h3 className="text-xl font-medium mb-2">{item.title}</h3>
                 <p className="text-muted-foreground">{item.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* About Section */}
+      <div id="about" className="bg-accent/20 py-16">
+        <div className="container max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold">About DocuGlance</h2>
+            <p className="text-muted-foreground mt-2">
+              Making insurance documents more accessible and understandable
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold">Your Insurance Document Assistant</h3>
+              <p className="text-muted-foreground">
+                DocuGlance helps you understand your insurance policies better by analyzing documents
+                and answering your specific questions about coverage, terms, and conditions.
+              </p>
+              <p className="text-muted-foreground">
+                Our advanced AI technology processes complex insurance documents to provide you with
+                clear, concise answers about your coverage, helping you make informed decisions
+                about your insurance needs.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
+                alt="Technology"
+                className="rounded-lg shadow-md w-full h-48 object-cover"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1521322800607-8c38375eef04"
+                alt="Insurance"
+                className="rounded-lg shadow-md w-full h-48 object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>
