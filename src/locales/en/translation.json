@@ -4,7 +4,8 @@
   "navigation": {
     "features": "Features",
     "howItWorks": "How it Works",
-    "about": "About"
+    "about": "About",
+    "faq": "FAQ"
   },
   "footer": {
     "rights": "All rights reserved."

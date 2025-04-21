@@ -11,6 +11,8 @@ import { summarizeFile, SummaryResult } from '@/utils/summarize';
 import { toast } from 'sonner';
 import { processDocument } from '@/services/api';
 import { FileText } from 'lucide-react';
+import { CookieConsent } from '@/components/CookieConsent';
+import FAQ from '@/components/FAQ';
 
 const Index = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -82,12 +84,11 @@ const Index = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
+      <CookieConsent />
       <div className="gradient-bg">
         <Hero onGetStarted={handleGetStarted} />
       </div>
 
-      {/* File Uploader Section */}
       {showUploader && (
         <div 
           ref={fileUploaderRef} 
@@ -123,7 +124,6 @@ const Index = () => {
         </div>
       )}
 
-      {/* Summary Section */}
       {summary && (
         <div className="container py-16 max-w-4xl">
           <div className="text-center mb-10">
@@ -144,7 +144,8 @@ const Index = () => {
         </div>
       )}
 
-      {/* Features Section */}
+      <FAQ />
+
       <div id="features" className="bg-accent/20 py-16">
         <div className="container max-w-6xl">
           <div className="text-center mb-12">
@@ -166,7 +167,6 @@ const Index = () => {
         </div>
       </div>
 
-      {/* How It Works Section */}
       <div id="how-it-works" className="py-16">
         <div className="container max-w-6xl">
           <div className="text-center mb-12">
@@ -204,7 +204,6 @@ const Index = () => {
         </div>
       </div>
 
-      {/* About Section */}
       <div id="about" className="bg-accent/20 py-16">
         <div className="container max-w-6xl">
           <div className="text-center mb-12">

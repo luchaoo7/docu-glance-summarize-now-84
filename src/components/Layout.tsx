@@ -56,6 +56,11 @@ const Layout = ({ children }: LayoutProps) => {
                   </button>
                 </li>
                 <li>
+                  <button onClick={() => scrollToSection('faq')} className="text-sm hover:text-primary">
+                    FAQ
+                  </button>
+                </li>
+                <li>
                   <button onClick={() => scrollToSection('about')} className="text-sm hover:text-primary">
                     {t('navigation.about')}
                   </button>
