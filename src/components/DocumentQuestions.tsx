@@ -9,6 +9,14 @@ interface DocumentQuestionsProps {
   onQuestionsChange: (questions: string[]) => void;
 }
 
+const exampleQuestions = [
+  'Are my broken windows covered?',
+  'What is my deductible amount?',
+  'Does my policy cover floods?',
+  'How long is my coverage valid?',
+  'Are storms included in coverage?',
+];
+
 const DocumentQuestions = ({ onQuestionsChange }: DocumentQuestionsProps) => {
   const [questions, setQuestions] = useState<string[]>(['']);
 
@@ -49,7 +57,7 @@ const DocumentQuestions = ({ onQuestionsChange }: DocumentQuestionsProps) => {
           <Input
             value={question}
             onChange={(e) => updateQuestion(index, e.target.value)}
-            placeholder={`Question ${index + 1}`}
+            placeholder={exampleQuestions[index] || `Question ${index + 1}`}
             className="flex-1"
             maxLength={40}
           />
@@ -87,3 +95,4 @@ const DocumentQuestions = ({ onQuestionsChange }: DocumentQuestionsProps) => {
 };
 
 export default DocumentQuestions;
+
