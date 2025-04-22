@@ -146,27 +146,6 @@ const Index = () => {
 
       <FAQ />
 
-      <div id="features" className="bg-accent/20 py-16">
-        <div className="container max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold">Features</h2>
-            <p className="text-muted-foreground mt-2">
-              Get started with DocuGlance in three simple steps
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature) => (
-              <div key={feature.step} className="bg-background p-8 rounded-lg shadow-sm">
-                <div className="text-xl font-bold text-primary mb-4">{feature.step}</div>
-                <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <div id="how-it-works" className="py-16">
         <div className="container max-w-6xl">
           <div className="text-center mb-12">
@@ -175,7 +154,6 @@ const Index = () => {
               Start analyzing your insurance documents in minutes
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {

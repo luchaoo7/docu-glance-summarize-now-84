@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import { FileText, Menu, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -46,11 +45,6 @@ const Layout = ({ children }: LayoutProps) => {
             <nav className="hidden md:block">
               <ul className="flex items-center gap-6">
                 <li>
-                  <button onClick={() => scrollToSection('features')} className="text-sm hover:text-primary">
-                    {t('navigation.features')}
-                  </button>
-                </li>
-                <li>
                   <button onClick={() => scrollToSection('how-it-works')} className="text-sm hover:text-primary">
                     {t('navigation.howItWorks')}
                   </button>
@@ -95,17 +89,12 @@ const Layout = ({ children }: LayoutProps) => {
                 <nav className="mt-6">
                   <ul className="space-y-4">
                     <li>
-                      <a href="#" className="block py-2 hover:text-primary">
-                        {t('navigation.features')}
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="block py-2 hover:text-primary">
+                      <a href="#" className="block py-2 hover:text-primary" onClick={() => scrollToSection('how-it-works')}>
                         {t('navigation.howItWorks')}
                       </a>
                     </li>
                     <li>
-                      <a href="#" className="block py-2 hover:text-primary">
+                      <a href="#" className="block py-2 hover:text-primary" onClick={() => scrollToSection('about')}>
                         {t('navigation.about')}
                       </a>
                     </li>
