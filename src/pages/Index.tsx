@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import FileUploader from '@/components/FileUploader';
@@ -206,13 +206,13 @@ const Index = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <img
-                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
-                alt="Technology"
+                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0"
+                alt="Insurance Documents"
                 className="rounded-lg shadow-md w-full h-48 object-cover"
               />
               <img
-                src="https://images.unsplash.com/photo-1521322800607-8c38375eef04"
-                alt="Insurance"
+                src="https://images.unsplash.com/photo-1517842645767-c639042777db"
+                alt="Document Analysis"
                 className="rounded-lg shadow-md w-full h-48 object-cover"
               />
             </div>
