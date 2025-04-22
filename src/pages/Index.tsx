@@ -185,7 +185,7 @@ const Index = () => {
       <div id="about" className="bg-accent/20 py-16">
         <div className="container max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold">About DocuGlance</h2>
+            <h2 className="text-3xl font-bold">About InsurSnoop</h2>
             <p className="text-muted-foreground mt-2">
               Making insurance documents more accessible and understandable
             </p>
@@ -195,7 +195,7 @@ const Index = () => {
             <div className="space-y-6">
               <h3 className="text-2xl font-semibold">Your Insurance Document Assistant</h3>
               <p className="text-muted-foreground">
-                DocuGlance helps you understand your insurance policies better by analyzing documents
+                InsurSnoop helps you understand your insurance policies better by analyzing documents
                 and answering your specific questions about coverage, terms, and conditions.
               </p>
               <p className="text-muted-foreground">
