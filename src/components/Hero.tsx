@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 
 interface HeroProps {
@@ -7,20 +6,20 @@ interface HeroProps {
 
 const heroImages = [
   {
-    src: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=520&q=80",
-    alt: "Turned on gray laptop computer",
+    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=520&q=80",
+    alt: "Computer screen showing documentation",
   },
   {
-    src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=520&q=80",
-    alt: "People sitting down near table with laptops",
+    src: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=520&q=80",
+    alt: "Colorful code and documentation on screen",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=520&q=80",
+    alt: "Collaborative document review",
   },
   {
     src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=520&q=80",
-    alt: "Woman using a laptop computer",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=520&q=80",
-    alt: "MacBook with code on the screen on a desk",
+    alt: "Digital document workspace",
   },
 ];
 
