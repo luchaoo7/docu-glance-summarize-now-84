@@ -6,20 +6,20 @@ interface HeroProps {
 
 const heroImages = [
   {
-    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=520&q=80",
-    alt: "Computer screen showing documentation",
+    src: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=520&q=80",
+    alt: "Digital document workspace",
   },
   {
-    src: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=520&q=80",
-    alt: "Colorful code and documentation on screen",
+    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=520&q=80",
+    alt: "Computer screen showing documentation",
   },
   {
     src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=520&q=80",
     alt: "Collaborative document review",
   },
   {
-    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=520&q=80",
-    alt: "Digital document workspace",
+    src: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=520&q=80",
+    alt: "Colorful code and documentation on screen",
   },
 ];
 
