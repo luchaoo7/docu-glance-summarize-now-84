@@ -5,11 +5,43 @@ interface HeroProps {
   onGetStarted: () => void;
 }
 
+const heroImages = [
+  {
+    src: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=520&q=80",
+    alt: "Turned on gray laptop computer",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=520&q=80",
+    alt: "People sitting down near table with laptops",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=520&q=80",
+    alt: "Woman using a laptop computer",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=520&q=80",
+    alt: "MacBook with code on the screen on a desk",
+  },
+];
+
 const Hero = ({ onGetStarted }: HeroProps) => {
   return (
     <div className="relative overflow-hidden">
       <div className="hero-pattern absolute inset-0 z-0"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 md:py-28">
+        {/* Images at the top */}
+        <div className="flex flex-wrap gap-4 justify-center mb-10">
+          {heroImages.map((img, i) => (
+            <img
+              key={img.src}
+              src={img.src}
+              alt={img.alt}
+              className="rounded-xl shadow-md object-cover w-32 h-24 sm:w-44 sm:h-28 md:w-56 md:h-36 transition-transform duration-200 hover:scale-105"
+              style={{ zIndex: 2, marginTop: i % 2 === 0 ? 0 : '16px' }}
+              loading="lazy"
+            />
+          ))}
+        </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
             Insurance Document Assistant
