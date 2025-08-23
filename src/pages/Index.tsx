@@ -58,8 +58,8 @@ const Index = () => {
     setIsProcessing(true);
     try {
       const response = await processDocument(file, questions)
-      // const uploadResponse = await uploadDocument(file)
-      // const questionResponse = await askQuestion(uploadResponse.file_id, questions)
+      const uploadResponse = await uploadDocument(file)
+      const questionResponse = await askQuestion(uploadResponse.file_id, questions)
 
       console.log(response.data)
       const result = await summarizeFile(file, questions, response.data);
