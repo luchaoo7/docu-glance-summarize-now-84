@@ -6,6 +6,19 @@ interface DocumentProcessRequest {
   questions: string[];
 }
 
+interface UploadResponse {
+  file_id: string,
+  message: string,
+  version: string,
+}
+
+interface AskResponse {
+  answer: string,
+  questions: string[],
+  version: string,
+}
+
+
 // Mock API endpoint URL
 const API_URL = 'https://api.example.com/process-document';
 
@@ -28,20 +41,7 @@ export const processDocument = async (document: File, questions: string[]) => {
       },
     });
 
-
-    // console.log('Sending document and questions to backend:', {
-      // documentName: document.name,
-      // documentSize: document.size,
-      // questions: questions
-    // });
-
     return response;
-    // Simulate API call delay
-    // await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // For demonstration, we'll continue using the local summarizeText function
-    // In a real implementation, this would be replaced with the actual API response
-    // throw new Error('Backend API not implemented yet');
     
   } catch (error) {
     console.error('Error sending document to backend:', error);
@@ -50,7 +50,7 @@ export const processDocument = async (document: File, questions: string[]) => {
 };
 
 
-export async function uploadDocument(document: File) {
+export async function uploadDocument(document: File): Promise<UploadResponse> {
   const session = await supabase.auth.getSession()
   const token = session.data.session?.access_token
 
@@ -58,7 +58,7 @@ export async function uploadDocument(document: File) {
   formData.append('document', document);
 
   // const res = await axios.post('http://localhost:8000/upload', formData, {
-  const res = await axios.post('/api/upload/v3/', formData, {
+  const res = await axios.post<UploadResponse>('/api/upload/v3/?q=upload', formData, {
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'multipart/form-data'
@@ -68,21 +68,23 @@ export async function uploadDocument(document: File) {
   return res.data
 }
 
-export async function askQuestion(fileId: string, question: string) {
+export async function askQuestion(fileId: string, questions: string[]): Promise<AskResponse> {
   const session = await supabase.auth.getSession()
   const token = session.data.session?.access_token
 
   // const res = await axios.get('http://localhost:8000/ask', {
-  const res = await axios.get('/api/ask/v3/', {
-    params: {
-      file_id: fileId,
-      q: question
-    },
-    headers: {
-      Authorization: `Bearer ${token}`
+  const res = await axios.post<AskResponse>(
+    '/api/ask/v3/?q=ask', 
+    questions, 
+    {
+      params: { file_id: fileId, },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
     }
-  })
+  )
 
-  return res.data.answer
+  return res.data
 }
 

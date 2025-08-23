@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { summarizeFile, SummaryResult } from '@/utils/summarize';
 import { toast } from 'sonner';
-import { processDocument } from '@/services/api';
+import { askQuestion, processDocument, uploadDocument } from '@/services/api';
 import { FileText } from 'lucide-react';
 import { CookieConsent } from '@/components/CookieConsent';
 import FAQ from '@/components/FAQ';
@@ -58,6 +58,9 @@ const Index = () => {
     setIsProcessing(true);
     try {
       const response = await processDocument(file, questions)
+      // const uploadResponse = await uploadDocument(file)
+      // const questionResponse = await askQuestion(uploadResponse.file_id, questions)
+
       console.log(response.data)
       const result = await summarizeFile(file, questions, response.data);
       setSummary(result);
