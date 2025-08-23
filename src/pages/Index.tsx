@@ -20,6 +20,8 @@ const Index = () => {
   const [summary, setSummary] = useState<SummaryResult | null>(null);
   const [showUploader, setShowUploader] = useState(false);
   const [questions, setQuestions] = useState<string[]>(['']);
+  const [uploadedFileId, setUploadedFileId] = useState<string | null>(null);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [features, setFeatures] = useState([
     {
       step: '01',
@@ -43,6 +45,11 @@ const Index = () => {
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
     setSummary(null);
+    // Clear cached file data if a different file is selected
+    if (uploadedFileName !== selectedFile.name) {
+      setUploadedFileId(null);
+      setUploadedFileName(null);
+    }
   };
 
   const handleQuestionsChange = (newQuestions: string[]) => {
@@ -58,8 +65,18 @@ const Index = () => {
     setIsProcessing(true);
     try {
       const response = await processDocument(file, questions)
-      const uploadResponse = await uploadDocument(file)
-      const questionResponse = await askQuestion(uploadResponse.file_id, questions)
+      
+      let fileId = uploadedFileId;
+      
+      // Only upload if we don't have a cached file_id or if it's a different file
+      if (!fileId || uploadedFileName !== file.name) {
+        const uploadResponse = await uploadDocument(file);
+        fileId = uploadResponse.file_id;
+        setUploadedFileId(fileId);
+        setUploadedFileName(file.name);
+      }
+      
+      const questionResponse = await askQuestion(fileId, questions);
 
       console.log(response.data)
       const result = await summarizeFile(file, questions, response.data);
@@ -83,6 +100,8 @@ const Index = () => {
     setFile(null);
     setSummary(null);
     setQuestions(['']);
+    setUploadedFileId(null);
+    setUploadedFileName(null);
   };
 
   return (
