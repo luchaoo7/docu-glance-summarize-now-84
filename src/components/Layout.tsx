@@ -1,6 +1,9 @@
+
 import { ReactNode } from 'react';
-import { FileText, Menu, Globe } from 'lucide-react';
+import { FileText, Menu, Globe, LogOut } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { useLogout } from '@/hooks/useLogout';
 import {
   Sheet,
   SheetContent,
@@ -21,6 +24,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const { t, i18n } = useTranslation();
+  const { logout } = useLogout();
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -78,6 +82,15 @@ const Layout = ({ children }: LayoutProps) => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+              className="flex items-center gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden sm:inline">Logout</span>
+            </Button>
             <Sheet>
               <SheetTrigger className="md:hidden p-2 rounded-md hover:bg-accent">
                 <Menu className="h-5 w-5" />
@@ -126,6 +139,16 @@ const Layout = ({ children }: LayoutProps) => {
                           Français
                         </button>
                       </div>
+                    </li>
+                    <li className="pt-4 border-t">
+                      <Button
+                        variant="ghost"
+                        onClick={logout}
+                        className="w-full justify-start gap-2"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </Button>
                     </li>
                   </ul>
                 </nav>
