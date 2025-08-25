@@ -5,11 +5,12 @@
 import { CoverageAnswer } from "@/services/api";
 
 export interface SummaryResult {
-  title: string;
-  summary: string;
-  keywords: string[];
-  readingTime: number;
-  questionAnswers: { question: string; answer: string, isCovered: boolean}[];
+  title?: string;
+  summary?: string;
+  keywords?: string[];
+  readingTime?: number;
+  // questionAnswers: { question: string; answer: string, isCovered?: boolean}[];
+  questionAnswers?: Record<string, string>;
 }
 
 export const summarizeText = async (text: string, questions: string[]): Promise<SummaryResult> => {
@@ -69,7 +70,7 @@ export const summarizeText = async (text: string, questions: string[]): Promise<
         summary,
         keywords,
         readingTime,
-        questionAnswers
+        // questionAnswers
       });
     }, 1500);
   });
@@ -107,7 +108,7 @@ export const summarizeFile = async (file: File, questions: string[], coverageAns
       summary: "This is a sample summary of the document. It contains the main points and key information extracted from the text. The summary highlights the most important concepts and conclusions, allowing you to quickly understand the document's content without reading it in full.",
       keywords: ["document", "summary", "analysis", "information", "content"],
       readingTime: 3,
-      questionAnswers: mockAnswers
+      // questionAnswers: mockAnswers
     };
   } catch (error) {
     console.error('Error summarizing file:', error);

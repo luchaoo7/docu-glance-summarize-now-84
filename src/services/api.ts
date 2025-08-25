@@ -13,7 +13,7 @@ interface UploadResponse {
 }
 
 interface AskResponse {
-  answer: string,
+  answer: Record<string, string>,
   questions: string[],
   version: string,
 }
@@ -68,13 +68,32 @@ export async function uploadDocument(document: File): Promise<UploadResponse> {
   return res.data
 }
 
+
+type QA = { question: string; answer: string };
+
+export function mapQuestionsAndAnswers(payload: {
+  questions: string[];
+  answer: string;
+  version: string;
+}): QA[] {
+  // Split answers on numbering like "1.", "2.", "3."
+  const answers = payload.answer
+    .split(/\n?\d+\.\s+/) // split by "1. ", "2. ", etc.
+    .filter(Boolean);     // remove empty entries
+
+  return payload.questions.map((q, i) => ({
+    question: q,
+    answer: answers[i] ?? "", // fallback if fewer answers
+  }));
+}
+
 export async function askQuestion(fileId: string, questions: string[]): Promise<AskResponse> {
   const session = await supabase.auth.getSession()
   const token = session.data.session?.access_token
 
   // const res = await axios.get('http://localhost:8000/ask', {
   const res = await axios.post<AskResponse>(
-    '/api/ask/v3/?q=ask', 
+    '/api/ask/v3a/?q=ask', 
     questions, 
     {
       params: { file_id: fileId, },

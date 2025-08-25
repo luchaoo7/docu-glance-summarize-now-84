@@ -9,13 +9,14 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { summarizeFile, SummaryResult } from '@/utils/summarize';
 import { toast } from 'sonner';
-import { askQuestion, processDocument, uploadDocument } from '@/services/api';
+import { askQuestion, mapQuestionsAndAnswers, processDocument, uploadDocument } from '@/services/api';
 import { FileText } from 'lucide-react';
 import { CookieConsent } from '@/components/CookieConsent';
 import FAQ from '@/components/FAQ';
 
 const Index = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [fileId, setFileId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [summary, setSummary] = useState<SummaryResult | null>(null);
   const [showUploader, setShowUploader] = useState(false);
@@ -42,6 +43,7 @@ const Index = () => {
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
+    setFileId(null)
     setSummary(null);
   };
 
@@ -57,13 +59,28 @@ const Index = () => {
 
     setIsProcessing(true);
     try {
-      const response = await processDocument(file, questions)
-      const uploadResponse = await uploadDocument(file)
-      const questionResponse = await askQuestion(uploadResponse.file_id, questions)
 
-      console.log(response.data)
-      const result = await summarizeFile(file, questions, response.data);
-      setSummary(result);
+      var firstTime = false;
+
+      let currentFileId = fileId;
+      if (!currentFileId && file) {
+
+        // const response = await processDocument(file, questions)
+        const uploadResponse = await uploadDocument(file)
+        currentFileId = uploadResponse.file_id; 
+        const questionResponse = await askQuestion(uploadResponse.file_id, questions)
+        setSummary({questionAnswers: questionResponse.answer});
+
+        setFileId(currentFileId);
+
+        firstTime = true;
+      }
+
+      if( currentFileId && !firstTime) {
+        const questionResponse = await askQuestion(currentFileId, questions)
+        setSummary({questionAnswers: questionResponse.answer});
+      }
+
     } catch (error) {
       toast.error('Failed to summarize document. Please try again.');
       console.error(error);
@@ -135,9 +152,10 @@ const Index = () => {
               Here's what we found in your document 
             </p>
           </div>
-          {summary.questionAnswers.length > 0 && (
+          {Object.keys(summary.questionAnswers).length > 0 && (
             <QuestionAnswers qaItems={summary.questionAnswers} />
           )}
+
 
           <div className="mt-10 text-center">
             <Button variant="outline" onClick={handleReset}>
