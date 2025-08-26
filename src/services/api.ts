@@ -1,10 +1,6 @@
 import axios from 'axios'
 import { supabase } from '../lib/supabase/client'
 // Interface for the request payload
-interface DocumentProcessRequest {
-  document: File;
-  questions: string[];
-}
 
 interface UploadResponse {
   file_id: string,

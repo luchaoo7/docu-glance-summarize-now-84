@@ -117,7 +117,7 @@ const Index = () => {
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold">Upload Your Document</h2>
             <p className="text-muted-foreground mt-2">
-              We support PDF, Word documents and text files.
+              We support PDF(.pdf), Word documents (.docx) and text files (.txt).
             </p>
           </div>
 
