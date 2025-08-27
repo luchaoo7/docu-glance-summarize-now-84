@@ -23,9 +23,6 @@ const App = () => {
   useEffect(() => {
     // Get current session on load
     supabase.auth.getSession().then(({ data }) => {
-      // console.log("Data session is: ")
-      // console.log(data.session)
-
       setSession(data.session);
       setLoading(false);
     });
@@ -34,15 +31,6 @@ const App = () => {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-
-    if(session !== null && session.access_token !== null) {
-      console.log("Data session is: ")
-      console.log(session)
-    }
-    console.log("Data session is: ")
-    console.log(session)
- 
-
 
     return () => {
       listener.subscription.unsubscribe();
