@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import FileUploader from '@/components/FileUploader';
@@ -13,8 +14,12 @@ import { askQuestion, mapQuestionsAndAnswers, processDocument, uploadDocument } 
 import { FileText } from 'lucide-react';
 import { CookieConsent } from '@/components/CookieConsent';
 import FAQ from '@/components/FAQ';
+import { supabase } from '@/lib/supabase/client';
 
 const Index = () => {
+  const navigate = useNavigate();
+  const [session, setSession] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [file, setFile] = useState<File | null>(null);
   const [fileId, setFileId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -40,6 +45,23 @@ const Index = () => {
   ]);
 
   const fileUploaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Get current session on load
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
+    });
+
+    // Subscribe to future changes
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, []);
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -90,6 +112,10 @@ const Index = () => {
   };
 
   const handleGetStarted = () => {
+    if (!session) {
+      navigate('/auth');
+      return;
+    }
     setShowUploader(true);
     setTimeout(() => {
       fileUploaderRef.current?.scrollIntoView({ behavior: 'smooth' });

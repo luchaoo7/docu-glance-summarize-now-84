@@ -44,21 +44,12 @@ const App = () => {
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        {session ? (
-          <Routes>
-            {/* Protected routes when logged in */}
-
-            <Route path="/" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        ) : (
-          // Public routes
-          <Routes>
-            <Route path="*" element={<AuthForm />} />
-          </Routes>
-
-        )}
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<AuthForm />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
 
       </BrowserRouter>
     </TooltipProvider>
