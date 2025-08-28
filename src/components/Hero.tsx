@@ -43,11 +43,11 @@ const Hero = ({ onGetStarted }: HeroProps) => {
         </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
-            Insurance Document Assistant
+            Upload a document. Ask a question. Get instant answers.
           </h1>
           
           <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
-            Upload your insurance policies and related documents to get clear summaries and ask specific questions about your coverage and terms. Simplify complex insurance information.
+            Our app makes it easy to understand your documents without digging through pages of text. Simply upload a file (PDF, Word, or TXT) and type your question — the system finds the relevant information and explains it clearly. Perfect for insurance policies, contracts, reports, and more.
           </p>
 
           <div className="mt-10">
