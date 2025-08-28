@@ -79,6 +79,21 @@ const Index = () => {
       return;
     }
 
+    // Check if user is logged in
+    if (!session) {
+      // Check if unregistered user has already used the app once
+      const hasUsedTrial = localStorage.getItem('hasUsedTrial');
+      
+      if (hasUsedTrial) {
+        toast.error('Trial expired. Please sign up to continue using the document analyzer.');
+        navigate('/auth');
+        return;
+      }
+      
+      // Mark that they've used their one free trial
+      localStorage.setItem('hasUsedTrial', 'true');
+    }
+
     setIsProcessing(true);
     try {
 
@@ -113,8 +128,12 @@ const Index = () => {
 
   const handleGetStarted = () => {
     if (!session) {
-      navigate('/auth');
-      return;
+      // Check if unregistered user has already used their trial
+      const hasUsedTrial = localStorage.getItem('hasUsedTrial');
+      if (hasUsedTrial) {
+        navigate('/auth');
+        return;
+      }
     }
     setShowUploader(true);
     setTimeout(() => {
