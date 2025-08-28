@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase/client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -10,6 +11,7 @@ import { Eye, EyeOff, FileText, Shield } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 
 export default function AuthForm() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -18,6 +20,17 @@ export default function AuthForm() {
   const [loading, setLoading] = useState(false)
   const [resetMode, setResetMode] = useState(false)
   const { toast } = useToast()
+
+  useEffect(() => {
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        navigate('/')
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [navigate])
 
   const validateForm = (isSignUp: boolean) => {
     if (!email || !password) {
