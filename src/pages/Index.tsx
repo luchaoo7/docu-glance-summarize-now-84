@@ -15,6 +15,7 @@ import { FileText } from 'lucide-react';
 import { CookieConsent } from '@/components/CookieConsent';
 import FAQ from '@/components/FAQ';
 import { supabase } from '@/lib/supabase/client';
+import SEO from '@/components/SEO';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -154,6 +155,12 @@ const Index = () => {
 
   return (
     <>
+      <SEO 
+        title="InsurSnoop - AI Insurance Document Analyzer"
+        description="Upload your insurance documents and get instant AI-powered answers about your coverage, terms, and conditions. Free trial available."
+        keywords="insurance, document analysis, AI assistant, policy questions, coverage analysis"
+        type="website"
+      />
       <Layout>
         <CookieConsent />
         <div className="gradient-bg">
