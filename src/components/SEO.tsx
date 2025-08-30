@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 interface SEOProps {
   title?: string;
@@ -17,70 +17,51 @@ const SEO = ({
   description = 'Upload a document. Ask a question. Get instant answers.',
   keywords = 'insurance, document analysis, AI assistant, policy questions',
   image = '/og-image.png',
-  url = window.location.href,
+  url = typeof window !== 'undefined' ? window.location.href : '',
   type = 'website',
   author = 'InsurSnoop',
   publishedTime,
   section
 }: SEOProps) => {
-  useEffect(() => {
-    // Update document title
-    document.title = title;
-
-    // Helper function to update or create meta tags
-    const updateMetaTag = (name: string, content: string, property?: boolean) => {
-      const attribute = property ? 'property' : 'name';
-      let element = document.querySelector(`meta[${attribute}="${name}"]`);
+  return (
+    <Helmet>
+      {/* Document title */}
+      <title>{title}</title>
       
-      if (element) {
-        element.setAttribute('content', content);
-      } else {
-        element = document.createElement('meta');
-        element.setAttribute(attribute, name);
-        element.setAttribute('content', content);
-        document.head.appendChild(element);
-      }
-    };
-
-    // Basic meta tags
-    updateMetaTag('description', description);
-    updateMetaTag('keywords', keywords);
-    if (author) updateMetaTag('author', author);
-
-    // Open Graph tags
-    updateMetaTag('og:title', title, true);
-    updateMetaTag('og:description', description, true);
-    updateMetaTag('og:type', type, true);
-    updateMetaTag('og:url', url, true);
-    updateMetaTag('og:image', image, true);
-    updateMetaTag('og:site_name', 'InsurSnoop', true);
-
-    // Twitter Card tags
-    updateMetaTag('twitter:card', 'summary_large_image');
-    updateMetaTag('twitter:title', title);
-    updateMetaTag('twitter:description', description);
-    updateMetaTag('twitter:image', image);
-
-    // Article-specific meta tags
-    if (type === 'article') {
-      if (publishedTime) updateMetaTag('article:published_time', publishedTime, true);
-      if (author) updateMetaTag('article:author', author, true);
-      if (section) updateMetaTag('article:section', section, true);
-    }
-
-    // Canonical URL
-    let canonicalElement = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
-    if (canonicalElement) {
-      canonicalElement.href = url;
-    } else {
-      canonicalElement = document.createElement('link');
-      canonicalElement.rel = 'canonical';
-      canonicalElement.href = url;
-      document.head.appendChild(canonicalElement);
-    }
-  }, [title, description, keywords, image, url, type, author, publishedTime, section]);
-
-  return null;
+      {/* Basic meta tags */}
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+      {author && <meta name="author" content={author} />}
+      
+      {/* Open Graph tags */}
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:type" content={type} />
+      <meta property="og:url" content={url} />
+      <meta property="og:image" content={image} />
+      <meta property="og:site_name" content="InsurSnoop" />
+      
+      {/* Twitter Card tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+      
+      {/* Article-specific meta tags */}
+      {type === 'article' && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      {type === 'article' && author && (
+        <meta property="article:author" content={author} />
+      )}
+      {type === 'article' && section && (
+        <meta property="article:section" content={section} />
+      )}
+      
+      {/* Canonical URL */}
+      <link rel="canonical" href={url} />
+    </Helmet>
+  );
 };
 
 export default SEO;
