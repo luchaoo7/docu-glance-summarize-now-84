@@ -158,7 +158,7 @@ const Index = () => {
       <SEO 
         title="InsurSnoop - AI Insurance Document Analyzer"
         description="Upload your insurance documents and get instant AI-powered answers about your coverage, terms, and conditions. Free trial available."
-        keywords="insurance, document analysis, AI assistant, policy questions, coverage analysis"
+        keywords="insursnoop, insurance, document analysis, AI assistant, policy questions, coverage analysis"
         type="website"
       />
       <Layout>
