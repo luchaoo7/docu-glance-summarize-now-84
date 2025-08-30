@@ -79,6 +79,7 @@ const Index = () => {
       return;
     }
 
+    var aboutToUseTrial = false
     // Check if user is logged in
     if (!session) {
       // Check if unregistered user has already used the app once
@@ -91,7 +92,7 @@ const Index = () => {
       }
       
       // Mark that they've used their one free trial
-      localStorage.setItem('hasUsedTrial', 'true');
+      // localStorage.setItem('hasUsedTrial', 'true');
     }
 
     setIsProcessing(true);
@@ -101,11 +102,13 @@ const Index = () => {
 
       let currentFileId = fileId;
       if (!currentFileId && file) {
+        
+        const hasUsedTrial = localStorage.getItem('hasUsedTrial');
 
         // const response = await processDocument(file, questions)
-        const uploadResponse = await uploadDocument(file)
+        const uploadResponse = await uploadDocument(file, hasUsedTrial)
         currentFileId = uploadResponse.file_id; 
-        const questionResponse = await askQuestion(uploadResponse.file_id, questions)
+        const questionResponse = await askQuestion(uploadResponse.file_id, questions, hasUsedTrial)
         setSummary({questionAnswers: questionResponse.answer});
 
         setFileId(currentFileId);
@@ -114,10 +117,12 @@ const Index = () => {
       }
 
       if( currentFileId && !firstTime) {
-        const questionResponse = await askQuestion(currentFileId, questions)
+        const hasUsedTrial = localStorage.getItem('hasUsedTrial');
+        const questionResponse = await askQuestion(currentFileId, questions, hasUsedTrial)
         setSummary({questionAnswers: questionResponse.answer});
       }
 
+      localStorage.setItem('hasUsedTrial', 'true');
     } catch (error) {
       toast.error('Failed to summarize document. Please try again.');
       console.error(error);
@@ -148,144 +153,146 @@ const Index = () => {
   };
 
   return (
-    <Layout>
-      <CookieConsent />
-      <div className="gradient-bg">
-        <Hero onGetStarted={handleGetStarted} />
-      </div>
+    <>
+      <Layout>
+        <CookieConsent />
+        <div className="gradient-bg">
+          <Hero onGetStarted={handleGetStarted} />
+        </div>
 
-      {showUploader && (
-        <div 
-          ref={fileUploaderRef} 
-          className="container py-16 max-w-4xl"
-        >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold">Upload Your Document</h2>
-            <p className="text-muted-foreground mt-2">
-              We support PDF(.pdf), Word documents (.docx) and text files (.txt).
-            </p>
+        {showUploader && (
+          <div
+            ref={fileUploaderRef}
+            className="container py-16 max-w-4xl"
+          >
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold">Upload Your Document</h2>
+              <p className="text-muted-foreground mt-2">
+                We support PDF(.pdf), Word documents (.docx) and text files (.txt).
+              </p>
+            </div>
+
+            <FileUploader onFileSelect={handleFileSelect} />
+
+            {file && <DocumentQuestions onQuestionsChange={handleQuestionsChange} />}
+
+            <div className="mt-6 text-center">
+              <Button
+                onClick={handleSummarize}
+                disabled={!file || isProcessing}
+                className="w-full max-w-xs"
+              >
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  'Get Answer'
+                )}
+              </Button>
+            </div>
           </div>
+        )}
 
-          <FileUploader onFileSelect={handleFileSelect} />
+        {summary && (
+          <div className="container py-6 max-w-4xl">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold">Document Coverage</h2>
+              <p className="text-muted-foreground mt-2">
+                Here's what we found in your document
+              </p>
+            </div>
+            {Object.keys(summary.questionAnswers).length > 0 && (
+              <QuestionAnswers qaItems={summary.questionAnswers} />
+            )}
 
-          {file && <DocumentQuestions onQuestionsChange={handleQuestionsChange} />}
 
-          <div className="mt-6 text-center">
-            <Button
-              onClick={handleSummarize}
-              disabled={!file || isProcessing}
-              className="w-full max-w-xs"
-            >
-              {isProcessing ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                'Summarize Document'
-              )}
-            </Button>
+            <div className="mt-10 text-center">
+              <Button variant="outline" onClick={handleReset}>
+                Query Another Document
+              </Button>
+            </div>
+          </div>
+        )}
+
+        <FAQ />
+
+        <div id="how-it-works" className="py-16">
+          <div className="container max-w-6xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold">How It Works</h2>
+              <p className="text-muted-foreground mt-2">
+                Start analyzing your insurance documents in minutes
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  step: '01',
+                  title: 'Upload Document',
+                  description: 'Upload your insurance policies and related documents through our secure interface.'
+                },
+                {
+                  step: '02',
+                  title: 'Ask Questions',
+                  description: 'Specify up to 5 questions about your coverage, terms, or any specific concerns.'
+                },
+                {
+                  step: '03',
+                  title: 'Get Insights',
+                  description: 'Receive clear answers and summaries about your insurance coverage and terms.'
+                }
+              ].map((item) => (
+                <div key={item.step} className="bg-background rounded-xl p-8 shadow-sm border">
+                  <div className="text-xl font-bold text-primary mb-4">{item.step}</div>
+                  <h3 className="text-xl font-medium mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      )}
 
-      {summary && (
-        <div className="container py-16 max-w-4xl">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold">Document Coverage</h2>
-            <p className="text-muted-foreground mt-2">
-              Here's what we found in your document 
-            </p>
-          </div>
-          {Object.keys(summary.questionAnswers).length > 0 && (
-            <QuestionAnswers qaItems={summary.questionAnswers} />
-          )}
+        <div id="about" className="bg-accent/20 py-16">
+          <div className="container max-w-6xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold">About InsurSnoop</h2>
+              <p className="text-muted-foreground mt-2">
+                Making insurance documents more accessible and understandable
+              </p>
+            </div>
 
-
-          <div className="mt-10 text-center">
-            <Button variant="outline" onClick={handleReset}>
-              Summarize Another Document
-            </Button>
-          </div>
-        </div>
-      )}
-
-      <FAQ />
-
-      <div id="how-it-works" className="py-16">
-        <div className="container max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold">How It Works</h2>
-            <p className="text-muted-foreground mt-2">
-              Start analyzing your insurance documents in minutes
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                step: '01',
-                title: 'Upload Document',
-                description: 'Upload your insurance policies and related documents through our secure interface.'
-              },
-              {
-                step: '02',
-                title: 'Ask Questions',
-                description: 'Specify up to 5 questions about your coverage, terms, or any specific concerns.'
-              },
-              {
-                step: '03',
-                title: 'Get Insights',
-                description: 'Receive clear answers and summaries about your insurance coverage and terms.'
-              }
-            ].map((item) => (
-              <div key={item.step} className="bg-background rounded-xl p-8 shadow-sm border">
-                <div className="text-xl font-bold text-primary mb-4">{item.step}</div>
-                <h3 className="text-xl font-medium mb-2">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <h3 className="text-2xl font-semibold">Your Insurance Document Assistant</h3>
+                <p className="text-muted-foreground">
+                  InsurSnoop helps you understand your insurance policies better by analyzing documents
+                  and answering your specific questions about coverage, terms, and conditions.
+                </p>
+                <p className="text-muted-foreground">
+                  Our advanced AI technology processes complex insurance documents to provide you with
+                  clear, concise answers about your coverage, helping you make informed decisions
+                  about your insurance needs.
+                </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div id="about" className="bg-accent/20 py-16">
-        <div className="container max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold">About InsurSnoop</h2>
-            <p className="text-muted-foreground mt-2">
-              Making insurance documents more accessible and understandable
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold">Your Insurance Document Assistant</h3>
-              <p className="text-muted-foreground">
-                InsurSnoop helps you understand your insurance policies better by analyzing documents
-                and answering your specific questions about coverage, terms, and conditions.
-              </p>
-              <p className="text-muted-foreground">
-                Our advanced AI technology processes complex insurance documents to provide you with
-                clear, concise answers about your coverage, helping you make informed decisions
-                about your insurance needs.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0"
-                alt="Insurance Documents"
-                className="rounded-lg shadow-md w-full h-48 object-cover"
-              />
-              <img
-                src="https://images.unsplash.com/photo-1517842645767-c639042777db"
-                alt="Document Analysis"
-                className="rounded-lg shadow-md w-full h-48 object-cover"
-              />
+              <div className="grid grid-cols-2 gap-4">
+                <img
+                  src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0"
+                  alt="Insurance Documents"
+                  className="rounded-lg shadow-md w-full h-48 object-cover"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1517842645767-c639042777db"
+                  alt="Document Analysis"
+                  className="rounded-lg shadow-md w-full h-48 object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

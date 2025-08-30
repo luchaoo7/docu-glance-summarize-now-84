@@ -46,17 +46,19 @@ export const processDocument = async (document: File, questions: string[]) => {
 };
 
 
-export async function uploadDocument(document: File): Promise<UploadResponse> {
+export async function uploadDocument(document: File, used: string | null = null): Promise<UploadResponse> {
   const session = await supabase.auth.getSession()
   const token = session.data.session?.access_token
 
   const formData = new FormData()
   formData.append('document', document);
+  formData.append('used', used);
 
   // const res = await axios.post('http://localhost:8000/upload', formData, {
   const res = await axios.post<UploadResponse>('/api/upload/v3/?q=upload', formData, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
+      Authorization:  token === undefined ? undefined : `Bearer ${token}`,
       'Content-Type': 'multipart/form-data'
     }
   })
@@ -83,7 +85,7 @@ export function mapQuestionsAndAnswers(payload: {
   }));
 }
 
-export async function askQuestion(fileId: string, questions: string[]): Promise<AskResponse> {
+export async function askQuestion(fileId: string, questions: string[], used: string | null): Promise<AskResponse> {
   const session = await supabase.auth.getSession()
   const token = session.data.session?.access_token
 
@@ -92,9 +94,10 @@ export async function askQuestion(fileId: string, questions: string[]): Promise<
     '/api/ask/v3a/?q=ask', 
     questions, 
     {
-      params: { file_id: fileId, },
+      params: { file_id: fileId, used: used},
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
+        Authorization:  token === undefined ? undefined : `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     }
