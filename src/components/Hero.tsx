@@ -27,55 +27,54 @@ const Hero = ({ onGetStarted }: HeroProps) => {
   return (
     <div className="relative overflow-hidden">
       <div className="hero-pattern absolute inset-0 z-0"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 md:py-20">
-        
-        {/* Mobile-first CTA Section */}
-        <div className="text-center mb-12 lg:mb-16">
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600 mb-6">
-            Upload a document. Ask a question. Get instant answers.
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-            Our app makes it easy to understand your documents without digging through pages of text. Simply upload a file (PDF, Word, or TXT) and type your question — the system finds the relevant information and explains it clearly.
-          </p>
-
-          {/* Prominent CTA Button for Mobile */}
-          <div className="mb-8">
-            <Button 
-              onClick={onGetStarted}
-              size="lg" 
-              className="text-lg px-8 py-3 shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
-            >
-              Get Started Now
-            </Button>
-          </div>
-        </div>
-
-        {/* Images section - hidden on small mobile, visible on larger screens */}
-        <div className="hidden sm:flex flex-wrap gap-4 justify-center mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 md:py-28">
+        {/* Images at the top */}
+        <div className="flex flex-wrap gap-4 justify-center mb-5">
           {heroImages.map((img, i) => (
             <img
               key={img.src}
               src={img.src}
               alt={img.alt}
-              className="rounded-xl shadow-md object-cover w-32 h-24 sm:w-44 sm:h-28 md:w-56 md:h-36 transition-transform duration-200 hover:scale-105"
+              className={`
+                rounded-xl shadow-md object-cover w-32 h-24 sm:w-44 sm:h-28 md:w-56 md:h-36 
+                transition-transform duration-200 hover:scale-105
+                ${i > 1 ? "hidden sm:block" : ""}  // only show 2 on mobile
+              `}
               style={{ zIndex: 2, marginTop: i % 2 === 0 ? 0 : '16px' }}
               loading="lazy"
             />
           ))}
         </div>
+        <div className="text-center">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
+            Upload a document. Ask a question. Get instant answers.
+          </h1>
 
-        {/* Features section */}
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {features.map((feature) => (
-            <div key={feature.title} className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md">
-              <div className="text-primary mb-4">
-                <feature.icon className="h-8 w-8 mx-auto" />
+          <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
+            Upload a document (PDF, Word, or TXT), ask a question, and our app finds and explains the answer. No more digging through pages of text — ideal for insurance policies, contracts, reports, and more.
+          </p>
+
+          <div className="mt-10">
+            <Button 
+              onClick={onGetStarted}
+              size="lg" 
+              className="animate-pulse"
+            >
+              Get Started
+            </Button>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {features.map((feature) => (
+              <div key={feature.title} className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md">
+                <div className="text-primary mb-4">
+                  <feature.icon className="h-8 w-8 mx-auto" />
+                </div>
+                <h3 className="text-lg font-medium">{feature.title}</h3>
+                <p className="mt-2 text-sm text-gray-600">{feature.description}</p>
               </div>
-              <h3 className="text-lg font-medium">{feature.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{feature.description}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
