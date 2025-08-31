@@ -156,9 +156,9 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="InsurSnoop - AI Insurance Document Analyzer"
-        description="Upload your insurance documents and get instant AI-powered answers about your coverage, terms, and conditions. Free trial available."
-        keywords="insursnoop, insurance, document analysis, AI assistant, policy questions, coverage analysis"
+        title="QueryTheDoc - AI Document Analyzer"
+        description="Upload your documents and get instant AI-powered answers about your content, terms, and key information. Free trial available."
+        keywords="querythedoc, document analysis, AI assistant, text analysis, document questions"
         type="website"
       />
       <Layout>
@@ -264,18 +264,18 @@ const Index = () => {
         <div id="about" className="bg-accent/20 py-16">
           <div className="container max-w-6xl">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold">About InsurSnoop</h2>
+              <h2 className="text-3xl font-bold">About QueryTheDoc</h2>
               <p className="text-muted-foreground mt-2">
-                Making insurance documents more accessible and understandable
+                Making documents more accessible and understandable
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
-                <h3 className="text-2xl font-semibold">Your Insurance Document Assistant</h3>
+                <h3 className="text-2xl font-semibold">Your Document Analysis Assistant</h3>
                 <p className="text-muted-foreground">
-                  InsurSnoop helps you understand your insurance policies better by analyzing documents
-                  and answering your specific questions about coverage, terms, and conditions.
+                  QueryTheDoc helps you understand your documents better by analyzing content
+                  and answering your specific questions about key information, terms, and conditions.
                 </p>
                 <p className="text-muted-foreground">
                   Our advanced AI technology processes complex insurance documents to provide you with

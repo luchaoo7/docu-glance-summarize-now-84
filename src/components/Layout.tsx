@@ -43,7 +43,7 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="container flex items-center justify-between">
           <a href="/" className="flex items-center gap-2 text-xl font-bold text-primary">
             <FileText className="h-6 w-6" />
-            <span>InsurSnoop</span>
+            <span>QueryTheDoc</span>
           </a>
           <div className="flex items-center gap-4">
             <nav className="hidden md:block">
@@ -165,10 +165,10 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-primary" />
-              <span className="font-semibold">InsurSnoop</span>
+              <span className="font-semibold">QueryTheDoc</span>
             </div>
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} InsurSnoop. {t('footer.rights')}
+              © {new Date().getFullYear()} QueryTheDoc. {t('footer.rights')}
             </div>
           </div>
         </div>

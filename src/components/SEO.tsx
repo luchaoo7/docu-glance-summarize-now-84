@@ -13,13 +13,13 @@ interface SEOProps {
 }
 
 const SEO = ({
-  title = 'InsurSnoop',
+  title = 'QueryTheDoc',
   description = 'Upload a document. Ask a question. Get instant answers.',
-  keywords = 'insurance, document analysis, AI assistant, policy questions',
+  keywords = 'document analysis, AI assistant, query documents, text analysis',
   image = '/og-image.png',
   url = typeof window !== 'undefined' ? window.location.href : '',
   type = 'website',
-  author = 'InsurSnoop',
+  author = 'QueryTheDoc',
   publishedTime,
   section
 }: SEOProps) => {
@@ -39,7 +39,7 @@ const SEO = ({
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="InsurSnoop" />
+      <meta property="og:site_name" content="QueryTheDoc" />
       
       {/* Twitter Card tags */}
       <meta name="twitter:card" content="summary_large_image" />

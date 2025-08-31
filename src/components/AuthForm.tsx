@@ -178,7 +178,7 @@ export default function AuthForm() {
               <FileText className="h-6 w-6 text-primary" />
             </div>
           </div>
-          <CardTitle className="text-2xl">Welcome to InsurSnoop</CardTitle>
+          <CardTitle className="text-2xl">Welcome to QueryTheDoc</CardTitle>
           <CardDescription>
             Sign in to your account or create a new one to get started
           </CardDescription>
