@@ -7,8 +7,10 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Eye, EyeOff, FileText, Shield, Chrome } from 'lucide-react'
+import { Eye, EyeOff, FileText, Shield } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
+import { FaGoogle } from "react-icons/fa";
+
 
 export default function AuthForm() {
   const navigate = useNavigate()
@@ -115,13 +117,28 @@ export default function AuthForm() {
   }
 
   const handleGoogleSignIn = async () => {
-    // Placeholder function for Google authentication
-    // You can implement your Google OAuth logic here
-    console.log('Google sign-in clicked')
-    toast({
-      title: "Google Sign-In",
-      description: "Google authentication will be implemented here.",
-    })
+    console.log("WINDOW.LOCATION.ORIGIN")
+    console.log(window.location.origin)
+    setLoading(true)
+    setError('')
+    
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google', 
+      options:   {
+        redirectTo: window.location.origin + "/"
+      }})
+
+    if (error) {
+      setError(error.message)
+    } else {
+      if (data) {
+        toast({
+          title: "Google Sign-In",
+          description: "Google authentication will be implemented here.",
+        })
+      }
+    }
+    setLoading(false)
   }
 
   if (resetMode) {
@@ -270,7 +287,7 @@ export default function AuthForm() {
                   className="w-full"
                   disabled={loading}
                 >
-                  <Chrome className="mr-2 h-4 w-4" />
+                  <FaGoogle color="#EA4335" size={20} />
                   Sign in with Google
                 </Button>
                 
@@ -359,7 +376,7 @@ export default function AuthForm() {
                   className="w-full"
                   disabled={loading}
                 >
-                  <Chrome className="mr-2 h-4 w-4" />
+                  <FaGoogle color="#EA4335" size={20} />
                   Sign up with Google
                 </Button>
               </div>
