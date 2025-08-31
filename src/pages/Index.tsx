@@ -46,6 +46,7 @@ const Index = () => {
   ]);
 
   const fileUploaderRef = useRef<HTMLDivElement>(null);
+  const answersRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Get current session on load
@@ -124,6 +125,11 @@ const Index = () => {
       }
 
       localStorage.setItem('hasUsedTrial', 'true');
+      
+      // Scroll to answers section after processing
+      setTimeout(() => {
+        answersRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     } catch (error) {
       toast.error('Failed to summarize document. Please try again.');
       console.error(error);
@@ -203,7 +209,7 @@ const Index = () => {
         )}
 
         {summary && (
-          <div className="container py-6 max-w-4xl">
+          <div ref={answersRef} className="container py-6 max-w-4xl">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold">Document Coverage</h2>
               <p className="text-muted-foreground mt-2">
