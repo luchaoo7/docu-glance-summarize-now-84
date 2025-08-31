@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Eye, EyeOff, FileText, Shield } from 'lucide-react'
+import { Eye, EyeOff, FileText, Shield, Chrome } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 
 export default function AuthForm() {
@@ -112,6 +112,16 @@ export default function AuthForm() {
       setResetMode(false)
     }
     setLoading(false)
+  }
+
+  const handleGoogleSignIn = async () => {
+    // Placeholder function for Google authentication
+    // You can implement your Google OAuth logic here
+    console.log('Google sign-in clicked')
+    toast({
+      title: "Google Sign-In",
+      description: "Google authentication will be implemented here.",
+    })
   }
 
   if (resetMode) {
@@ -242,6 +252,28 @@ export default function AuthForm() {
                 >
                   {loading ? "Signing in..." : "Sign In"}
                 </Button>
+                
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or continue with
+                    </span>
+                  </div>
+                </div>
+
+                <Button 
+                  variant="outline" 
+                  onClick={handleGoogleSignIn}
+                  className="w-full"
+                  disabled={loading}
+                >
+                  <Chrome className="mr-2 h-4 w-4" />
+                  Sign in with Google
+                </Button>
+                
                 <Button 
                   variant="ghost" 
                   onClick={() => setResetMode(true)}
@@ -301,13 +333,36 @@ export default function AuthForm() {
                 />
               </div>
               
-              <Button 
-                onClick={handleSignUp} 
-                disabled={loading}
-                className="w-full"
-              >
-                {loading ? "Creating account..." : "Create Account"}
-              </Button>
+              <div className="space-y-2">
+                <Button 
+                  onClick={handleSignUp} 
+                  disabled={loading}
+                  className="w-full"
+                >
+                  {loading ? "Creating account..." : "Create Account"}
+                </Button>
+                
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-background px-2 text-muted-foreground">
+                      Or continue with
+                    </span>
+                  </div>
+                </div>
+
+                <Button 
+                  variant="outline" 
+                  onClick={handleGoogleSignIn}
+                  className="w-full"
+                  disabled={loading}
+                >
+                  <Chrome className="mr-2 h-4 w-4" />
+                  Sign up with Google
+                </Button>
+              </div>
             </TabsContent>
           </Tabs>
         </CardContent>
