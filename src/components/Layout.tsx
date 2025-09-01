@@ -1,6 +1,6 @@
 
 import { ReactNode } from 'react';
-import { Menu, Globe, LogOut } from 'lucide-react';
+import { FileText, Menu, Globe, LogOut } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useLogout } from '@/hooks/useLogout';
@@ -42,7 +42,8 @@ const Layout = ({ children }: LayoutProps) => {
       <header className="border-b py-4 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
         <div className="container flex items-center justify-between">
           <a href="/" className="flex items-center gap-2 text-xl font-bold text-primary">
-            <img src="/querythedoc-favicon-32x32.png" alt="QueryTheDoc Logo" className="h-6 w-6" />
+            {/* <img src="/querythedoc-favicon-32x32.png" alt="QueryTheDoc Logo" className="h-6 w-6" /> */}
+            <FileText className="h-6 w-6" />
             <span>QueryTheDoc</span>
           </a>
           <div className="flex items-center gap-4">
