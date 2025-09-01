@@ -46,6 +46,11 @@ const Hero = ({ onGetStarted }: HeroProps) => {
           ))}
         </div>
         <div className="text-center">
+          <div className="mb-4">
+            <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+              ✨ AI Powered
+            </span>
+          </div>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
             Upload a document. Ask a question. Get instant answers.
           </h1>
