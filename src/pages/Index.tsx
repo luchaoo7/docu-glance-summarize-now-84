@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { summarizeFile, SummaryResult } from '@/utils/summarize';
 import { toast } from 'sonner';
-import { askQuestion, mapQuestionsAndAnswers, processDocument, uploadDocument } from '@/services/api';
+import { askQuestion, mapQuestionsAndAnswers, processDocument, uploadDocument, uploadDocumentFromUrl } from '@/services/api';
 import { FileText } from 'lucide-react';
 import { CookieConsent } from '@/components/CookieConsent';
 import FAQ from '@/components/FAQ';
@@ -22,6 +22,7 @@ const Index = () => {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [file, setFile] = useState<File | null>(null);
+  const [documentUrl, setDocumentUrl] = useState<string | null>(null);
   const [fileId, setFileId] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [summary, setSummary] = useState<SummaryResult | null>(null);
@@ -67,7 +68,15 @@ const Index = () => {
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
+    setDocumentUrl(null);
     setFileId(null)
+    setSummary(null);
+  };
+
+  const handleUrlSelect = (url: string) => {
+    setDocumentUrl(url);
+    setFile(null);
+    setFileId(null);
     setSummary(null);
   };
 
@@ -76,8 +85,8 @@ const Index = () => {
   };
 
   const handleSummarize = async () => {
-    if (!file) {
-      toast.error('Please upload a document first');
+    if (!file && !documentUrl) {
+      toast.error('Please upload a document or enter a document URL first');
       return;
     }
 
@@ -103,12 +112,15 @@ const Index = () => {
       var firstTime = false;
 
       let currentFileId = fileId;
-      if (!currentFileId && file) {
+      if (!currentFileId && (file || documentUrl)) {
         
         const hasUsedTrial = localStorage.getItem('hasUsedTrial');
 
-        // const response = await processDocument(file, questions)
-        const uploadResponse = await uploadDocument(file, hasUsedTrial)
+        // Upload either file or URL
+        const uploadResponse = file 
+          ? await uploadDocument(file, hasUsedTrial)
+          : await uploadDocumentFromUrl(documentUrl!, hasUsedTrial);
+        
         currentFileId = uploadResponse.file_id; 
         const questionResponse = await askQuestion(uploadResponse.file_id, questions, hasUsedTrial)
         setSummary({questionAnswers: questionResponse.answer});
@@ -155,6 +167,8 @@ const Index = () => {
 
   const handleReset = () => {
     setFile(null);
+    setDocumentUrl(null);
+    setFileId(null);
     setSummary(null);
     setQuestions(['']);
   };
@@ -185,14 +199,14 @@ const Index = () => {
               </p>
             </div>
 
-            <FileUploader onFileSelect={handleFileSelect} />
+            <FileUploader onFileSelect={handleFileSelect} onUrlSelect={handleUrlSelect} />
 
-            {file && <DocumentQuestions onQuestionsChange={handleQuestionsChange} />}
+            {(file || documentUrl) && <DocumentQuestions onQuestionsChange={handleQuestionsChange} />}
 
             <div className="mt-6 text-center">
               <Button
                 onClick={handleSummarize}
-                disabled={!file || isProcessing}
+                disabled={(!file && !documentUrl) || isProcessing}
                 className="w-full max-w-xs"
               >
                 {isProcessing ? (

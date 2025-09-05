@@ -66,6 +66,23 @@ export async function uploadDocument(document: File, used: string | null = null)
   return res.data
 }
 
+export async function uploadDocumentFromUrl(url: string, used: string | null = null): Promise<UploadResponse> {
+  const session = await supabase.auth.getSession()
+  const token = session.data.session?.access_token
+
+  const res = await axios.post<UploadResponse>('/api/upload/v3/?q=upload', {
+    document_url: url,
+    used: used
+  }, {
+    headers: {
+      Authorization: token === undefined ? undefined : `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+
+  return res.data
+}
+
 
 type QA = { question: string; answer: string };
 
