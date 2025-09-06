@@ -19,7 +19,7 @@ const FAQ = () => {
         
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">
-            <AccordionTrigger>How secure is my insurance document data?</AccordionTrigger>
+            <AccordionTrigger>How secure is my document data?</AccordionTrigger>
             <AccordionContent>
               We take security seriously. Your documents are encrypted during transmission and processing.
               We don't store your documents after analysis is complete, and all processing is done on
@@ -28,19 +28,18 @@ const FAQ = () => {
           </AccordionItem>
 
           <AccordionItem value="item-2">
-            <AccordionTrigger>What types of insurance documents can I analyze?</AccordionTrigger>
+            <AccordionTrigger>What types of documents can I analyze?</AccordionTrigger>
             <AccordionContent>
-              Our system can process various insurance documents including home insurance, auto insurance,
-              life insurance, and health insurance policies. We support PDF, Word, and text file formats.
+              Our system can process various types documents including insurance policies, contracts,
+              or manuals. We support PDF, Word, and text file formats.
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-3">
             <AccordionTrigger>How accurate are the answers to my questions?</AccordionTrigger>
             <AccordionContent>
-              Our AI system is trained on thousands of insurance documents and provides highly accurate
-              information. However, for critical decisions, we recommend verifying with your insurance
-              provider directly.
+              Our AI is trained on thousands of documents to provide highly accurate information.
+              However, for important decisions, we recommend verifying with the original source or a qualified professional.
             </AccordionContent>
           </AccordionItem>
 

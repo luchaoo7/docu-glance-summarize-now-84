@@ -32,17 +32,17 @@ const Index = () => {
     {
       step: '01',
       title: 'Upload Document',
-      description: 'Upload your insurance policies and related documents through our secure interface.'
+      description: 'Securely upload your documents, including reports, policies, and other files.'
     },
     {
       step: '02',
       title: 'Ask Questions',
-      description: 'Specify up to 5 questions about your coverage, terms, or any specific concerns.'
+      description: 'Specify up to 5 questions about your document, terms, or any specific concerns.'
     },
     {
       step: '03',
       title: 'Get Insights',
-      description: 'Receive clear answers and summaries about your insurance coverage and terms.'
+      description: 'Receive clear answers and summaries about your documents and their contents.'
     }
   ]);
 
@@ -250,7 +250,7 @@ const Index = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold">How It Works</h2>
               <p className="text-muted-foreground mt-2">
-                Start analyzing your insurance documents in minutes
+                Start analyzing your documents in minutes
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -258,17 +258,17 @@ const Index = () => {
                 {
                   step: '01',
                   title: 'Upload Document',
-                  description: 'Upload your insurance policies and related documents through our secure interface.'
+                  description: 'Securely upload your documents, including reports, policies, and other files.'
                 },
                 {
                   step: '02',
                   title: 'Ask Questions',
-                  description: 'Specify up to 5 questions about your coverage, terms, or any specific concerns.'
+                  description: 'Specify up to 5 questions about your document, terms, or any specific concerns.'
                 },
                 {
                   step: '03',
                   title: 'Get Insights',
-                  description: 'Receive clear answers and summaries about your insurance coverage and terms.'
+                  description: 'Receive clear answers and summaries about your documents and their contents.'
                 }
               ].map((item) => (
                 <div key={item.step} className="bg-background rounded-xl p-8 shadow-sm border">
@@ -298,15 +298,14 @@ const Index = () => {
                   and answering your specific questions about key information, terms, and conditions.
                 </p>
                 <p className="text-muted-foreground">
-                  Our advanced AI technology processes complex insurance documents to provide you with
-                  clear, concise answers about your coverage, helping you make informed decisions
-                  about your insurance needs.
+                  Using advanced AI, we analyze your documents and provide clear, concise insights to help 
+                  you make well-informed decisions.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <img
                   src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0"
-                  alt="Insurance Documents"
+                  alt="User Documents for Analysis"
                   className="rounded-lg shadow-md w-full h-48 object-cover"
                 />
                 <img

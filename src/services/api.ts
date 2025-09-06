@@ -70,10 +70,11 @@ export async function uploadDocumentFromUrl(url: string, used: string | null = n
   const session = await supabase.auth.getSession()
   const token = session.data.session?.access_token
 
-  const res = await axios.post<UploadResponse>('/api/upload/v3/?q=upload', {
-    document_url: url,
-    used: used
-  }, {
+  const formData = new FormData()
+  formData.append('document_url', url);
+  formData.append('used', used);
+
+  const res = await axios.post<UploadResponse>('/api/upload/v3/url/?q=upload', formData, {
     headers: {
       Authorization: token === undefined ? undefined : `Bearer ${token}`,
       'Content-Type': 'application/json'

@@ -88,8 +88,8 @@ const Hero = ({ onGetStarted }: HeroProps) => {
 
 const features = [
   {
-    title: 'Upload Insurance Documents',
-    description: 'Easily upload PDFs, Word documents, and text files containing your insurance policies and claims.',
+    title: 'Upload a Document',
+    description: 'Easily upload PDFs, Word documents, and text files containing insurance details, reports, etc.',
     icon: (props: any) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +108,7 @@ const features = [
     ),
   },
   {
-    title: 'Ask Your Insurance Questions',
+    title: 'Ask Your Document Questions',
     description: 'Get precise answers to up to 5 specific questions about your policy, coverage limits, exclusions, and claims.',
     icon: (props: any) => (
       <svg
@@ -129,7 +129,7 @@ const features = [
   },
   {
     title: 'Expert Analysis',
-    description: 'Advanced algorithms analyze your insurance documents to highlight key terms and provide reliable answers.',
+    description: 'Advanced algorithms analyze your documents to highlight key terms and provide reliable answers.',
     icon: (props: any) => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
