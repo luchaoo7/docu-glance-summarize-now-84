@@ -96,11 +96,13 @@ const Index = () => {
       // Check if unregistered user has already used the app once
       const hasUsedTrial = localStorage.getItem('hasUsedTrial');
       
-      if (hasUsedTrial) {
-        toast.error('Trial expired. Please sign up to continue using the document analyzer.');
-        navigate('/auth');
-        return;
-      }
+      // NO AUTH
+      localStorage.setItem('hasUsedTrial', "false"); // remove
+      // if (hasUsedTrial) {
+        // toast.error('Trial expired. Please sign up to continue using the document analyzer.');
+        // navigate('/auth');
+        // return;
+      // }
       
       // Mark that they've used their one free trial
       // localStorage.setItem('hasUsedTrial', 'true');
@@ -136,7 +138,7 @@ const Index = () => {
         setSummary({questionAnswers: questionResponse.answer});
       }
 
-      localStorage.setItem('hasUsedTrial', 'true');
+      localStorage.setItem('hasUsedTrial', 'false');
       
       // Scroll to answers section after processing
       setTimeout(() => {
@@ -153,11 +155,13 @@ const Index = () => {
   const handleGetStarted = () => {
     if (!session) {
       // Check if unregistered user has already used their trial
-      const hasUsedTrial = localStorage.getItem('hasUsedTrial');
-      if (hasUsedTrial) {
-        navigate('/auth');
-        return;
-      }
+      // NO AUTH
+      localStorage.setItem('hasUsedTrial', "false"); // remove
+      // const hasUsedTrial = localStorage.getItem('hasUsedTrial');
+      // if (hasUsedTrial) {
+        // navigate('/auth');
+        // return;
+      // }
     }
     setShowUploader(true);
     setTimeout(() => {
