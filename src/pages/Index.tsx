@@ -180,9 +180,9 @@ const Index = () => {
   return (
     <>
       <SEO 
-        title="QueryTheDoc - AI Document Analyzer"
-        description="Upload your documents and get instant AI-powered answers about your content, terms, and key information. Free trial available."
-        keywords="querythedoc, document analysis, AI assistant, text analysis, document questions"
+        title="Query The Doc - AI Document Analyzer"
+        description="Query The Doc - Upload your documents and get instant AI-powered answers about your content, terms, and key information. Free trial available."
+        keywords="Query The Doc, querythedoc, document analysis, AI assistant, text analysis, document questions"
         type="website"
       />
       <Layout>

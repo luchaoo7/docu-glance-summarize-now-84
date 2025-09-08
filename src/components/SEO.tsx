@@ -13,13 +13,13 @@ interface SEOProps {
 }
 
 const SEO = ({
-  title = 'QueryTheDoc',
-  description = 'Upload a document. Ask a question. Get instant answers.',
-  keywords = 'document analysis, AI assistant, query documents, text analysis',
+  title = 'Query The Doc - QueryTheDoc',
+  description = 'Query The Doc, Upload a document. Ask a question. Get instant answers.',
+  keywords = 'Query The Doc, document analysis, AI assistant, query documents, text analysis',
   image = '/og-image.png',
   url = typeof window !== 'undefined' ? window.location.href : '',
   type = 'website',
-  author = 'QueryTheDoc',
+  author = 'Query The Doc - QueryTheDoc',
   publishedTime,
   section
 }: SEOProps) => {
