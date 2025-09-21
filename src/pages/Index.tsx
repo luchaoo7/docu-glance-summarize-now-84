@@ -16,6 +16,8 @@ import { CookieConsent } from '@/components/CookieConsent';
 import FAQ from '@/components/FAQ';
 import { supabase } from '@/lib/supabase/client';
 import SEO from '@/components/SEO';
+import axios, { AxiosError } from "axios";
+
 
 const Index = () => {
   const navigate = useNavigate();
@@ -145,8 +147,23 @@ const Index = () => {
         answersRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } catch (error) {
-      toast.error('Failed to summarize document. Please try again.');
-      console.error(error);
+      // console.error(error);
+
+      if (axios.isAxiosError(error)) {
+        // AxiosError: has extra info
+        // console.error("Axios error:", error.message);
+        // console.error("Response data:", error.response?.data);
+        // console.error("Status code:", error.response?.status);
+        // toast.error("Status code:" + error.response?.status);
+        if(error.response.status === 429) {
+          toast.error("Rate limit exceeded per minute");
+        }
+      } else {
+        // Non-Axios error
+        console.error("Response error:", error);
+        toast.error('Unexpected error: Failed to summarize document. Please try again.');
+      }
+
     } finally {
       setIsProcessing(false);
     }
